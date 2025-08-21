@@ -33,5 +33,6 @@ public class TestFixture
         using var scope = Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDb>();
         await db.LibRes.ExecuteDeleteAsync();
+        await db.HotelReview.ExecuteDeleteAsync();
     }
 }
