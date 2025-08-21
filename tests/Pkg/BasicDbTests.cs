@@ -1,9 +1,9 @@
-using app.pkg;
+using app.Pkg;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using tests.infra;
+using tests.Infra;
 
-namespace tests.pkg;
+namespace tests.Pkg;
 
 public class BasicDbTests(TestFixture fixture) : TestsBase
 {

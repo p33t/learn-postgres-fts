@@ -1,4 +1,4 @@
-namespace app.pkg.Model;
+namespace app.Pkg.Model;
 
 public enum LanguageEnum
 {

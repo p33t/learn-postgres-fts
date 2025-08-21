@@ -1,4 +1,4 @@
-namespace tests.infra;
+namespace tests.Infra;
 
 [Collection("Serial")]
 public abstract class TestsBase : IClassFixture<TestFixture>;

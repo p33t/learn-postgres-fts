@@ -1,8 +1,8 @@
-using app.pkg.Model;
+using app.Pkg.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace app.pkg;
+namespace app.Pkg;
 
 public class AppDb(DbContextOptions baseSetup) : DbContext(baseSetup)
 {
@@ -15,5 +15,4 @@ public class AppDb(DbContextOptions baseSetup) : DbContext(baseSetup)
             // For debugging... .AddCommandLogging()
             .ReplaceService<ISqlGenerationHelper, SqlGenerationHelper>();
     }
-    
 }

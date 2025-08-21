@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace tests.infra;
+namespace tests.Infra;
 
 public static class TestExtensions
 {

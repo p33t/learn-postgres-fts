@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace app.pkg.Model;
+namespace app.Pkg.Model;
 
 /// Library Resource that needs to be full text searchable
 [PrimaryKey(nameof(Id))]

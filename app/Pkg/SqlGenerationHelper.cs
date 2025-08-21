@@ -2,7 +2,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
 
-namespace app.pkg;
+namespace app.Pkg;
 
 // Ignore warnings about using internals of API
 #pragma warning disable EF1001

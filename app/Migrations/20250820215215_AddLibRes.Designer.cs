@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using app.pkg;
+using app.Pkg;
 
 #nullable disable
 
@@ -24,7 +24,7 @@ namespace app.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("app.pkg.Model.LibRes", b =>
+            modelBuilder.Entity("app.Pkg.Model.LibRes", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");

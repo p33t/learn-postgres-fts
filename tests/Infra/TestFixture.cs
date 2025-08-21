@@ -1,10 +1,10 @@
 using app;
-using app.pkg;
+using app.Pkg;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace tests.infra;
+namespace tests.Infra;
 
 public class TestFixture
 {

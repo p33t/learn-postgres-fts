@@ -1,4 +1,4 @@
-﻿using app.pkg;
+﻿using app.Pkg;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Migrations;
