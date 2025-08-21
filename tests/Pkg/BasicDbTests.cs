@@ -11,6 +11,7 @@ public class BasicDbTests(TestFixture fixture) : TestsBase
     public async Task InsertAndRetrieve()
     {
         var testName = GetCurrentMethod().CalcTestName();
+        await fixture.ResetAsync();
         await fixture.WithScopeAsync(async sp =>
         {
             var db = sp.GetRequiredService<AppDb>();

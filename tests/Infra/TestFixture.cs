@@ -11,11 +11,9 @@ public class TestFixture
     private readonly IHost _host = Program.CreateHost([]);
     public IServiceProvider Services => _host.Services;
 
-    /// Deletes all data and executes the given function within a DI 'scope'
+    /// Executes the given function within a DI 'scope'
     public async Task<T> WithScopeAsync<T>(Func<IServiceProvider, Task<T>> fn)
     {
-        await ResetAsync();
-
         using var scope = Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
 
         return await fn(scope.ServiceProvider);
