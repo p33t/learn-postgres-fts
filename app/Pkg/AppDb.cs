@@ -7,7 +7,9 @@ namespace app.Pkg;
 public class AppDb(DbContextOptions baseSetup) : DbContext(baseSetup)
 {
     public DbSet<LibRes> LibRes { get; set; }
-    
+
+    public DbSet<HotelReview> HotelReview { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
         builder
