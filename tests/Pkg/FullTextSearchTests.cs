@@ -38,6 +38,8 @@ public class FullTextSearchTests(TestFixture fixture, ITestOutputHelper outputHe
     [InlineData("beautiful", "french", 1233)]
     [InlineData("petit", "english", 216)]
     [InlineData("petit", "french", 187)] // hmm... you'd think this would have more
+    [InlineData("déconseillé", "english", 2)]
+    [InlineData("déconseillé", "french", 5)]
     public async Task LanguageSpecificSearch(string term, string language, int expCount)
     {
         fixture.SetupLogging(outputHelper);
