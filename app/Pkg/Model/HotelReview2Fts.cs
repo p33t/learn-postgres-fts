@@ -8,7 +8,7 @@ public class HotelReview2Fts
 {
     public string Id { get; set; } = string.Empty;
 
-    public string HotelReview2Id { get; set; } = string.Empty;
+    public string OwnerId { get; set; } = string.Empty;
 
     // Do later if necessary. Only the original language for now.
     // public LanguageEnum Language { get; set; }

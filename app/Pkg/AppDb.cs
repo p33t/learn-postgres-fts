@@ -43,7 +43,7 @@ public class AppDb(DbContextOptions baseSetup, IDbLogTo logTo) : DbContext(baseS
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<HotelReview2Fts>()
-            .HasIndex(x => x.HotelReview2Id) // Will add 'Language' if more translations are needed
+            .HasIndex(x => x.OwnerId) // Will add 'Language' if more translations are needed
             .IsUnique();
             
         modelBuilder.Entity<HotelReview2Fts>()

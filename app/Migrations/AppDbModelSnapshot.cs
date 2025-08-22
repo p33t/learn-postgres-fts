@@ -63,7 +63,7 @@ namespace app.Migrations
 
                     NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("VectorEn"), "GIN");
 
-                    b.ToTable("HotelReview", (string)null);
+                    b.ToTable("HotelReview");
                 });
 
             modelBuilder.Entity("app.Pkg.Model.HotelReview2", b =>
@@ -95,7 +95,7 @@ namespace app.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HotelReview2", (string)null);
+                    b.ToTable("HotelReview2");
                 });
 
             modelBuilder.Entity("app.Pkg.Model.HotelReview2Fts", b =>
@@ -103,7 +103,7 @@ namespace app.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
-                    b.Property<string>("HotelReview2Id")
+                    b.Property<string>("OwnerId")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -127,7 +127,7 @@ namespace app.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HotelReview2Id")
+                    b.HasIndex("OwnerId")
                         .IsUnique();
 
                     b.HasIndex("VectorEn");
@@ -138,7 +138,7 @@ namespace app.Migrations
 
                     NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("VectorFr"), "GIN");
 
-                    b.ToTable("HotelReview2Fts", (string)null);
+                    b.ToTable("HotelReview2Fts");
                 });
 
             modelBuilder.Entity("app.Pkg.Model.LibRes", b =>
@@ -160,14 +160,14 @@ namespace app.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LibRes", (string)null);
+                    b.ToTable("LibRes");
                 });
 
             modelBuilder.Entity("app.Pkg.Model.HotelReview2Fts", b =>
                 {
                     b.HasOne("app.Pkg.Model.HotelReview2", "Owner")
                         .WithMany("Ftss")
-                        .HasForeignKey("HotelReview2Id")
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

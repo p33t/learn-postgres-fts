@@ -13,7 +13,7 @@ using app.Pkg;
 namespace app.Migrations
 {
     [DbContext(typeof(AppDb))]
-    [Migration("20250822193804_AddHotelReview2")]
+    [Migration("20250822214757_AddHotelReview2")]
     partial class AddHotelReview2
     {
         /// <inheritdoc />
@@ -106,7 +106,7 @@ namespace app.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
-                    b.Property<string>("HotelReview2Id")
+                    b.Property<string>("OwnerId")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -130,7 +130,7 @@ namespace app.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HotelReview2Id")
+                    b.HasIndex("OwnerId")
                         .IsUnique();
 
                     b.HasIndex("VectorEn");
@@ -170,7 +170,7 @@ namespace app.Migrations
                 {
                     b.HasOne("app.Pkg.Model.HotelReview2", "Owner")
                         .WithMany("Ftss")
-                        .HasForeignKey("HotelReview2Id")
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

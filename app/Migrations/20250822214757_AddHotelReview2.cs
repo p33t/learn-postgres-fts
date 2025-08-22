@@ -34,7 +34,7 @@ namespace app.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
-                    HotelReview2Id = table.Column<string>(type: "text", nullable: false),
+                    OwnerId = table.Column<string>(type: "text", nullable: false),
                     TextA = table.Column<string>(type: "text", nullable: false),
                     VectorEn = table.Column<NpgsqlTsVector>(type: "tsvector", nullable: false)
                         .Annotation("Npgsql:TsVectorConfig", "english")
@@ -47,17 +47,17 @@ namespace app.Migrations
                 {
                     table.PrimaryKey("PK_HotelReview2Fts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_HotelReview2Fts_HotelReview2_HotelReview2Id",
-                        column: x => x.HotelReview2Id,
+                        name: "FK_HotelReview2Fts_HotelReview2_OwnerId",
+                        column: x => x.OwnerId,
                         principalTable: "HotelReview2",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_HotelReview2Fts_HotelReview2Id",
+                name: "IX_HotelReview2Fts_OwnerId",
                 table: "HotelReview2Fts",
-                column: "HotelReview2Id",
+                column: "OwnerId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
