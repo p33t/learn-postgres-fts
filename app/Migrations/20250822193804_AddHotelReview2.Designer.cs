@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using NpgsqlTypes;
@@ -12,9 +13,11 @@ using app.Pkg;
 namespace app.Migrations
 {
     [DbContext(typeof(AppDb))]
-    partial class AppDbModelSnapshot : ModelSnapshot
+    [Migration("20250822193804_AddHotelReview2")]
+    partial class AddHotelReview2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,7 +66,7 @@ namespace app.Migrations
 
                     NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("VectorEn"), "GIN");
 
-                    b.ToTable("HotelReview", (string)null);
+                    b.ToTable("HotelReview");
                 });
 
             modelBuilder.Entity("app.Pkg.Model.HotelReview2", b =>
@@ -95,7 +98,7 @@ namespace app.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HotelReview2", (string)null);
+                    b.ToTable("HotelReview2");
                 });
 
             modelBuilder.Entity("app.Pkg.Model.HotelReview2Fts", b =>
@@ -138,7 +141,7 @@ namespace app.Migrations
 
                     NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("VectorFr"), "GIN");
 
-                    b.ToTable("HotelReview2Fts", (string)null);
+                    b.ToTable("HotelReview2Fts");
                 });
 
             modelBuilder.Entity("app.Pkg.Model.LibRes", b =>
@@ -160,7 +163,7 @@ namespace app.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LibRes", (string)null);
+                    b.ToTable("LibRes");
                 });
 
             modelBuilder.Entity("app.Pkg.Model.HotelReview2Fts", b =>

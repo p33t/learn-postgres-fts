@@ -24,6 +24,7 @@ public class DataLoader(TestFixture fixture, ITestOutputHelper testOutputHelper)
         Assert.Equal(10_000, reviews.Count);
 
         await fixture.ResetAsync<HotelReview>();
+        await fixture.ResetAsync<HotelReview2>();
         await fixture.WithScopeAsync(async sp =>
         {
             var db = sp.GetRequiredService<AppDb>();
@@ -31,6 +32,7 @@ public class DataLoader(TestFixture fixture, ITestOutputHelper testOutputHelper)
             {
                 var review = reviews[(Index)index]!.AsObject();
 
+                // Convenience method to retrieving a JSON review prop
                 T? ReviewProp<T>(string propName)
                 {
                     var node = review[propName];
@@ -43,16 +45,18 @@ public class DataLoader(TestFixture fixture, ITestOutputHelper testOutputHelper)
                 }
 
                 var hr = new HotelReview { Id = $"hotels-macrometa-{index}" };
+                db.HotelReview.Add(hr);
+                
                 hr.Property = ReviewProp<string>("Property_Name")!;
                 hr.Rating = ReviewProp<int>("Review Rating");
                 hr.Text = ReviewProp<string>("Review Text")!;
                 hr.Title = ReviewProp<string>("Review Title")!;
                 var dateStr = ReviewProp<string>("Date Of Review");
                 hr.Date = DateOnly.ParseExact(dateStr ?? "1/1/0001", "M/d/yyyy", CultureInfo.InvariantCulture);
-                db.HotelReview.Add(hr);
-
                 var reviewLocation = ReviewProp<string>("Location Of The Reviewer");
                 hr.Language = LocationToLanguage(reviewLocation, hr.Text);
+
+                db.HotelReview2.Add(HotelReview2.CreateFrom(hr));
 
                 // testOutputHelper.WriteLine(JsonSerializer.Serialize(hr));
 

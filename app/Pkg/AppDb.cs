@@ -10,6 +10,10 @@ public class AppDb(DbContextOptions baseSetup, IDbLogTo logTo) : DbContext(baseS
     public DbSet<LibRes> LibRes { get; set; }
 
     public DbSet<HotelReview> HotelReview { get; set; }
+    
+    public DbSet<HotelReview2> HotelReview2 { get; set; }
+    
+    public DbSet<HotelReview2Fts> HotelReview2Fts { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
@@ -24,6 +28,7 @@ public class AppDb(DbContextOptions baseSetup, IDbLogTo logTo) : DbContext(baseS
     {
         base.OnModelCreating(modelBuilder);
         
+        // V1
         modelBuilder.Entity<HotelReview>()
             .HasGeneratedTsVectorColumn(x => x.VectorEn,
                 "english",
@@ -31,9 +36,28 @@ public class AppDb(DbContextOptions baseSetup, IDbLogTo logTo) : DbContext(baseS
             .HasIndex(x => x.VectorEn)
             .HasMethod("GIN");
 
-        // Not sure how to tell EF not to load certain fields. Maybe this happens by default.
-        // modelBuilder.Entity<HotelReview>()
-        //     .Navigation(x => x.VectorEn)
-        //     .AutoInclude(false);
+        // V2
+        modelBuilder.Entity<HotelReview2>()
+            .HasMany(x => x.Ftss)
+            .WithOne(x => x.Owner)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<HotelReview2Fts>()
+            .HasIndex(x => x.HotelReview2Id) // Will add 'Language' if more translations are needed
+            .IsUnique();
+            
+        modelBuilder.Entity<HotelReview2Fts>()
+            .HasGeneratedTsVectorColumn(x => x.VectorEn,
+                "english",
+                x => new { x.TextA })
+            .HasIndex(x => x.VectorEn)
+            .HasMethod("GIN");
+        
+        modelBuilder.Entity<HotelReview2Fts>()
+            .HasGeneratedTsVectorColumn(x => x.VectorFr,
+                "french",
+                x => new { x.TextA })
+            .HasIndex(x => x.VectorFr)
+            .HasMethod("GIN");
     }
 }
