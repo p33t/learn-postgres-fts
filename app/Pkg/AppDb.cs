@@ -1,10 +1,11 @@
 using app.Pkg.Model;
+using app.Pkg.Support;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace app.Pkg;
 
-public class AppDb(DbContextOptions baseSetup) : DbContext(baseSetup)
+public class AppDb(DbContextOptions baseSetup, IDbLogTo logTo) : DbContext(baseSetup)
 {
     public DbSet<LibRes> LibRes { get; set; }
 
@@ -14,7 +15,8 @@ public class AppDb(DbContextOptions baseSetup) : DbContext(baseSetup)
     {
         builder
             .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking) // require explicit .AsTracking()
-            // For debugging... .AddCommandLogging()
+            // For debugging...
+            .LogTo(logTo.WriteLine)
             .ReplaceService<ISqlGenerationHelper, SqlGenerationHelper>();
     }
 

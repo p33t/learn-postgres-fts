@@ -1,4 +1,5 @@
 ﻿using app.Pkg;
+using app.Pkg.Support;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -22,6 +23,8 @@ public static class Program
         {
             HostApplicationBuilder builder = Host.CreateApplicationBuilder(strings);
             var services = builder.Services;
+            services.AddTransient<IDbLogTo>(sp => sp.GetRequiredService<DbLogTo>());
+            services.AddSingleton<DbLogTo>();
             services.AddDbContext<AppDb>((_, dbOptions) =>
             {
                 var connectionString = "Host=postgres;Username=learn-login;Password=learn-login;Database=learn-db";
