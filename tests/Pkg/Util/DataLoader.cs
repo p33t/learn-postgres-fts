@@ -23,7 +23,7 @@ public class DataLoader(TestFixture fixture, ITestOutputHelper testOutputHelper)
         var reviews = await LoadArrayAsync("Downloads", "hotels-macrometa-2.json");
         Assert.Equal(10_000, reviews.Count);
 
-        await fixture.ResetAsync();
+        await fixture.ResetAsync<HotelReview>();
         await fixture.WithScopeAsync(async sp =>
         {
             var db = sp.GetRequiredService<AppDb>();

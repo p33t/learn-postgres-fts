@@ -28,11 +28,10 @@ public class TestFixture
         });
 
     /// Clears the database
-    public async Task ResetAsync()
+    public async Task ResetAsync<TEntity>() where TEntity : class
     {
         using var scope = Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDb>();
-        await db.LibRes.ExecuteDeleteAsync();
-        await db.HotelReview.ExecuteDeleteAsync();
+        await db.Set<TEntity>().ExecuteDeleteAsync();
     }
 }

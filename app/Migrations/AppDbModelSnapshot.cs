@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using NpgsqlTypes;
 using app.Pkg;
 
 #nullable disable
@@ -49,7 +50,18 @@ namespace app.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<NpgsqlTsVector>("VectorEn")
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("tsvector")
+                        .HasAnnotation("Npgsql:TsVectorConfig", "english")
+                        .HasAnnotation("Npgsql:TsVectorProperties", new[] { "Title", "Text" });
+
                     b.HasKey("Id");
+
+                    b.HasIndex("VectorEn");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("VectorEn"), "GIN");
 
                     b.ToTable("HotelReview");
                 });

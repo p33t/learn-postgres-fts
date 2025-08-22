@@ -1,4 +1,5 @@
 using app.Pkg;
+using app.Pkg.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using tests.Infra;
@@ -11,7 +12,7 @@ public class BasicDbTests(TestFixture fixture) : TestsBase
     public async Task InsertAndRetrieve()
     {
         var testName = GetCurrentMethod().CalcTestName();
-        await fixture.ResetAsync();
+        await fixture.ResetAsync<LibRes>();
         await fixture.WithScopeAsync(async sp =>
         {
             var db = sp.GetRequiredService<AppDb>();

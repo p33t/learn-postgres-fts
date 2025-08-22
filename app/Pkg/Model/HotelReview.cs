@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using NpgsqlTypes;
 
 namespace app.Pkg.Model;
 
@@ -28,4 +29,8 @@ public class HotelReview
     [Required]
     [Column(TypeName = "text")]
     public LanguageEnum Language { get; set; }
+    
+    public NpgsqlTsVector VectorEn { get; set; } = null!;
+
+    // public NpgsqlTsVector VectorFr { get; set; } = null!;
 }
