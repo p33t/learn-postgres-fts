@@ -1,8 +1,10 @@
 using app;
 using app.Pkg;
+using app.Pkg.Support;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Xunit.Abstractions;
 
 namespace tests.Infra;
 
@@ -33,5 +35,11 @@ public class TestFixture
         using var scope = Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDb>();
         await db.Set<TEntity>().ExecuteDeleteAsync();
+    }
+
+    /// Sets up logging of queries
+    public void SetupLogging(ITestOutputHelper outputHelper)
+    {
+        Services.GetRequiredService<DbLogTo>().AssignWriteLine(outputHelper.WriteLine);
     }
 }

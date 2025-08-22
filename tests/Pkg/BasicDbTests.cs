@@ -3,10 +3,11 @@ using app.Pkg.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using tests.Infra;
+using Xunit.Abstractions;
 
 namespace tests.Pkg;
 
-public class BasicDbTests(TestFixture fixture) : TestsBase
+public class BasicDbTests(TestFixture fixture, ITestOutputHelper outputHelper) : TestsBase
 {
     [Fact]
     public async Task InsertAndRetrieve()
@@ -29,7 +30,35 @@ public class BasicDbTests(TestFixture fixture) : TestsBase
             var saved = await db.LibRes.SingleAsync(x => x.Id == added.Id);
             Assert.Equal(added.Title, saved.Title);
             Assert.Equivalent(added, saved);
+        });
+    }
 
+    /// One way to avoid loading unnecessary fields
+    [Fact]
+    public async Task Select_AvoidsLoadingVectorFields()
+    {
+        fixture.SetupLogging(outputHelper);
+        
+        await fixture.WithScopeAsync(async sp =>
+        {
+            var db = sp.GetRequiredService<AppDb>();
+
+            var results = await db.HotelReview
+                .Where(x => x.VectorEn.Matches(EF.Functions.PlainToTsQuery("conversation")))
+                .Select(x => new HotelReview
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Text = x.Text,
+                    Rating = x.Rating,
+                    Language = x.Language,
+                    Property = x.Property,
+                    Date = x.Date
+                })
+                .ToListAsync();
+            
+            Assert.NotEmpty(results);
+            Assert.All(results, x => Assert.Null(x.VectorEn));
         });
     }
 }
