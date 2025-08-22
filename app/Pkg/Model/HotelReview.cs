@@ -1,7 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 using NpgsqlTypes;
 
 namespace app.Pkg.Model;

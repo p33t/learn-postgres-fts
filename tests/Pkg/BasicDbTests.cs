@@ -37,7 +37,7 @@ public class BasicDbTests(TestFixture fixture, ITestOutputHelper outputHelper) :
     [Fact]
     public async Task Select_AvoidsLoadingVectorFields()
     {
-        fixture.SetupLogging(outputHelper);
+        // fixture.SetupLogging(outputHelper);
         
         await fixture.WithScopeAsync(async sp =>
         {

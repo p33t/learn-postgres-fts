@@ -14,7 +14,7 @@ public class DataLoader(TestFixture fixture, ITestOutputHelper testOutputHelper)
     /// Loading data from JSON file downloaded from:<br/>
     /// https://raw.githubusercontent.com/Macrometacorp/datasets/master/hotel-reviews/hotels.json
     /// And then transformed to fix issues:<br/>
-    /// - Replacing \u00ef\u00bf\u00bd with \u00e9 in json file had lots of fixes<br/>
+    /// - Replacing \u00ef\u00bf\u00bd with \u00e9 in json file; had lots of fixes<br/>
     /// - Inconsistent encoding fixed by replacing regexp: &lt;U\+([[:alnum:]]{4})> with \\u$1
 
     [Fact]

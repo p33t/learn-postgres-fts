@@ -12,7 +12,7 @@ public class FullTextSearchTests(TestFixture fixture, ITestOutputHelper outputHe
     [Theory]
     [InlineData("marry", 33, 26)]
     [InlineData("beauty", 1497, 1453)]
-    public async Task SimpleTermSearch(string term, int expCount, int expNonTermCount)
+    public async Task SimpleTermSearchV1(string term, int expCount, int expNonTermCount)
     {
         await fixture.WithScopeAsync(async sp =>
         {
@@ -40,9 +40,9 @@ public class FullTextSearchTests(TestFixture fixture, ITestOutputHelper outputHe
     [InlineData("petit", "french", 187)] // hmm... you'd think this would have more
     [InlineData("déconseillé", "english", 2)]
     [InlineData("déconseillé", "french", 5)]
-    public async Task LanguageSpecificSearch(string term, string language, int expCount)
+    public async Task LanguageSpecificSearchV2(string term, string language, int expCount)
     {
-        fixture.SetupLogging(outputHelper);
+        // fixture.SetupLogging(outputHelper);
         
         await fixture.WithScopeAsync(async sp =>
         {

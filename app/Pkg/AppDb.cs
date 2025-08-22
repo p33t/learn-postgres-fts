@@ -36,28 +36,5 @@ public class AppDb(DbContextOptions baseSetup, IDbLogTo logTo) : DbContext(baseS
 
         // V2
         modelBuilder.AddFullTextSearch<HotelReview2>();
-        
-        // modelBuilder.Entity<HotelReview2>()
-        //     .HasMany(x => x.Ftses)
-        //     .WithOne(x => x.Owner)
-        //     .OnDelete(DeleteBehavior.Cascade);
-        //
-        // modelBuilder.Entity<Fts>()
-        //     .HasIndex(x => x.OwnerId) // Will add 'Language' if more translations are needed
-        //     .IsUnique();
-        //     
-        // modelBuilder.Entity<Fts>()
-        //     .HasGeneratedTsVectorColumn(x => x.VectorEn,
-        //         "english",
-        //         x => new { x.TextA })
-        //     .HasIndex(x => x.VectorEn)
-        //     .HasMethod("GIN");
-        //
-        // modelBuilder.Entity<Fts>()
-        //     .HasGeneratedTsVectorColumn(x => x.VectorFr,
-        //         "french",
-        //         x => new { x.TextA })
-        //     .HasIndex(x => x.VectorFr)
-        //     .HasMethod("GIN");
     }
 }

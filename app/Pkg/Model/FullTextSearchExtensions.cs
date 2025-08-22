@@ -1,27 +1,9 @@
-using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 
 namespace app.Pkg.Model;
 
 public static class FullTextSearchExtensions
 {
-    /// Performs the appropriate where statement for a direct full-text-search using the given language
-    public static IQueryable<Fts> FullTextSearch(this IQueryable<Fts> query, string term,
-        string language)
-    {
-        if ("english".Equals(language, StringComparison.InvariantCultureIgnoreCase))
-        {
-            return query.Where(x => x.VectorEn.Matches(EF.Functions.PlainToTsQuery("english", term)));
-        }
-
-        if ("french".Equals(language, StringComparison.InvariantCultureIgnoreCase))
-        {
-            return query.Where(x => x.VectorFr.Matches(EF.Functions.PlainToTsQuery("french", term)));
-        }
-
-        throw new NotSupportedException($"Language '{language}' is not supported.");
-    }
-
     /// Performs the appropriate where statement for an indirect full-text-search using the given language
     public static IQueryable<TEntity> FullTextSearch<TEntity>(this IQueryable<TEntity> query, string term,
         string language) where TEntity : IHasId, IHasFtses
