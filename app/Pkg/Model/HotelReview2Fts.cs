@@ -4,7 +4,7 @@ using NpgsqlTypes;
 namespace app.Pkg.Model;
 
 [PrimaryKey(nameof(Id))]
-public class HotelReview2Fts
+public class HotelReview2Fts : IFtsEntity
 {
     public string Id { get; set; } = string.Empty;
 

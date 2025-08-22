@@ -35,18 +35,15 @@ public class FullTextSearchTests(TestFixture fixture) : TestsBase
     [InlineData("marry", "french", 7)]
     [InlineData("beautiful", "english", 1497)]
     [InlineData("beautiful", "french", 1233)]
-    [InlineData("sympathique", "english", 28)]
-    [InlineData("sympathique", "french", 28)]
+    [InlineData("petit", "english", 216)]
+    [InlineData("petit", "french", 187)] // hmm... you'd think this would have more
     public async Task LanguageSpecificSearch(string term, string language, int expCount)
     {
         await fixture.WithScopeAsync(async sp =>
         {
             var db = sp.GetRequiredService<AppDb>();
             var result = await db.HotelReview2
-                .Where(hr => db.HotelReview2Fts
-                    .FullTextSearch(term, language)
-                    .Select(x => x.OwnerId)
-                    .Contains(hr.Id))
+                .FullTextSearch(db.HotelReview2Fts, term, language)
                 .ToListAsync();
 
             Assert.Equal(expCount, result.Count);

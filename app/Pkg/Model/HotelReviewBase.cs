@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace app.Pkg.Model;
 
 [PrimaryKey(nameof(Id))]
-public class HotelReviewBase
+public class HotelReviewBase : IHasId
 {
     public string Id { get; set; } = string.Empty;
     
