@@ -45,17 +45,10 @@ public class BasicDbTests(TestFixture fixture, ITestOutputHelper outputHelper) :
 
             var results = await db.HotelReview
                 .Where(x => x.VectorEn.Matches(EF.Functions.PlainToTsQuery("conversation")))
-                .Select(x => new HotelReview
-                {
-                    Id = x.Id,
-                    Title = x.Title,
-                    Text = x.Text,
-                    Rating = x.Rating,
-                    Language = x.Language,
-                    Property = x.Property,
-                    Date = x.Date
-                })
-                .ToListAsync();
+                // NOTE: Must be after where clause
+                // .Select(HotelReview.LEAN)
+                // .ToListAsync();
+                .ToListLeanAsync();
             
             Assert.NotEmpty(results);
             Assert.All(results, x => Assert.Null(x.VectorEn));
