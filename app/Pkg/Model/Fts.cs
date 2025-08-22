@@ -3,8 +3,11 @@ using NpgsqlTypes;
 
 namespace app.Pkg.Model;
 
+/// General full-text-search entity associated with various primary entities.
+/// This is separate to allow calculated text and
+/// multiple language indexes without increasing overhead on primary entity operations.
 [PrimaryKey(nameof(Id))]
-public class HotelReview2Fts : IFtsEntity
+public class Fts
 {
     public string Id { get; set; } = string.Empty;
 
@@ -19,6 +22,4 @@ public class HotelReview2Fts : IFtsEntity
     public NpgsqlTsVector VectorEn { get; set; } = null!;
 
     public NpgsqlTsVector VectorFr { get; set; } = null!;
-    
-    public HotelReview2? Owner { get; set; } = null;
 }

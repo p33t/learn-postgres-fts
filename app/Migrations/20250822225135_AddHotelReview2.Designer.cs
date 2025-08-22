@@ -13,7 +13,7 @@ using app.Pkg;
 namespace app.Migrations
 {
     [DbContext(typeof(AppDb))]
-    [Migration("20250822214757_AddHotelReview2")]
+    [Migration("20250822225135_AddHotelReview2")]
     partial class AddHotelReview2
     {
         /// <inheritdoc />
@@ -25,6 +25,49 @@ namespace app.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("app.Pkg.Model.Fts", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("TextA")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<NpgsqlTsVector>("VectorEn")
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("tsvector")
+                        .HasAnnotation("Npgsql:TsVectorConfig", "english")
+                        .HasAnnotation("Npgsql:TsVectorProperties", new[] { "TextA" });
+
+                    b.Property<NpgsqlTsVector>("VectorFr")
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("tsvector")
+                        .HasAnnotation("Npgsql:TsVectorConfig", "french")
+                        .HasAnnotation("Npgsql:TsVectorProperties", new[] { "TextA" });
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId")
+                        .IsUnique();
+
+                    b.HasIndex("VectorEn");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("VectorEn"), "GIN");
+
+                    b.HasIndex("VectorFr");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("VectorFr"), "GIN");
+
+                    b.ToTable("HotelReview2Fts", (string)null);
+                });
 
             modelBuilder.Entity("app.Pkg.Model.HotelReview", b =>
                 {
@@ -101,49 +144,6 @@ namespace app.Migrations
                     b.ToTable("HotelReview2");
                 });
 
-            modelBuilder.Entity("app.Pkg.Model.HotelReview2Fts", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("OwnerId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("TextA")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<NpgsqlTsVector>("VectorEn")
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("tsvector")
-                        .HasAnnotation("Npgsql:TsVectorConfig", "english")
-                        .HasAnnotation("Npgsql:TsVectorProperties", new[] { "TextA" });
-
-                    b.Property<NpgsqlTsVector>("VectorFr")
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("tsvector")
-                        .HasAnnotation("Npgsql:TsVectorConfig", "french")
-                        .HasAnnotation("Npgsql:TsVectorProperties", new[] { "TextA" });
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OwnerId")
-                        .IsUnique();
-
-                    b.HasIndex("VectorEn");
-
-                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("VectorEn"), "GIN");
-
-                    b.HasIndex("VectorFr");
-
-                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("VectorFr"), "GIN");
-
-                    b.ToTable("HotelReview2Fts");
-                });
-
             modelBuilder.Entity("app.Pkg.Model.LibRes", b =>
                 {
                     b.Property<string>("Id")
@@ -166,20 +166,18 @@ namespace app.Migrations
                     b.ToTable("LibRes");
                 });
 
-            modelBuilder.Entity("app.Pkg.Model.HotelReview2Fts", b =>
+            modelBuilder.Entity("app.Pkg.Model.Fts", b =>
                 {
-                    b.HasOne("app.Pkg.Model.HotelReview2", "Owner")
-                        .WithMany("Ftss")
+                    b.HasOne("app.Pkg.Model.HotelReview2", null)
+                        .WithMany("Ftses")
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("app.Pkg.Model.HotelReview2", b =>
                 {
-                    b.Navigation("Ftss");
+                    b.Navigation("Ftses");
                 });
 #pragma warning restore 612, 618
         }

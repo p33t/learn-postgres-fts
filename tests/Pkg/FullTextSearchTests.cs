@@ -3,10 +3,11 @@ using app.Pkg.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using tests.Infra;
+using Xunit.Abstractions;
 
 namespace tests.Pkg;
 
-public class FullTextSearchTests(TestFixture fixture) : TestsBase
+public class FullTextSearchTests(TestFixture fixture, ITestOutputHelper outputHelper) : TestsBase
 {
     [Theory]
     [InlineData("marry", 33, 26)]
@@ -39,11 +40,13 @@ public class FullTextSearchTests(TestFixture fixture) : TestsBase
     [InlineData("petit", "french", 187)] // hmm... you'd think this would have more
     public async Task LanguageSpecificSearch(string term, string language, int expCount)
     {
+        fixture.SetupLogging(outputHelper);
+        
         await fixture.WithScopeAsync(async sp =>
         {
             var db = sp.GetRequiredService<AppDb>();
             var result = await db.HotelReview2
-                .FullTextSearch(db.HotelReview2Fts, term, language)
+                .FullTextSearch(term, language)
                 .ToListAsync();
 
             Assert.Equal(expCount, result.Count);
