@@ -12,10 +12,15 @@ This could be rearranged to have a single vector that matches a specific transla
 ## Reusable indexing setup
 A full-text-search can be added to any entity `Xxx` in the form of a `XxxFts` table. The same related entity structure `Fts` is used.
 
-## Low-overhead, customizable indexes
+## Low-overhead, customizable indexes - V2
 Full-text / vector indexes are created in another `XxxFts` table which keeps the original entities lightweight
 
 The `XxxFts` table has its own copy of the searchable text which must be maintained but also allows custom calculation of searchable text
+
+## Low-overhead, integrated indexes - V1
+First attempt has indexes in the same table. A 'Lean' technique is used to avoid loading the indexes when reading data.
+
+But better to use full record when updating.
 
 # Setup
 1. Setup a database that matches connection string in [Program.cs](./app/Program.cs)

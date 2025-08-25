@@ -23,7 +23,7 @@ public class FullTextSearchTests(TestFixture fixture, ITestOutputHelper outputHe
 
             Assert.Equal(expCount, result.Count);
 
-            // Confirm the term wasn't in some of the results
+            // Confirm the exact term wasn't in some of the results
             var nonTermCount = result.Count(x => !x.Text.ToLowerInvariant().Contains(term)
                                                  && !x.Title.ToLowerInvariant().Contains(term));
 
@@ -43,7 +43,7 @@ public class FullTextSearchTests(TestFixture fixture, ITestOutputHelper outputHe
     public async Task LanguageSpecificSearchV2(string term, string language, int expCount)
     {
         // fixture.SetupLogging(outputHelper);
-        
+
         await fixture.WithScopeAsync(async sp =>
         {
             var db = sp.GetRequiredService<AppDb>();
