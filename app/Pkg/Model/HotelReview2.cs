@@ -8,19 +8,28 @@ namespace app.Pkg.Model;
 public class HotelReview2 : HotelReviewBase, IHasFtses
 {
     /// Create from a V1
-    public static HotelReview2 CreateFrom(HotelReviewBase hrBase) => new()
+    public static HotelReview2 CreateFrom(HotelReviewBase hrBase)
     {
-        Id = hrBase.Id,
-        Date = hrBase.Date,
-        Rating = hrBase.Rating,
-        Language = hrBase.Language,
-        Property = hrBase.Property,
-        Text = hrBase.Text,
-        Title = hrBase.Title,
-        Ftses = [
-            new() { Id = Guid.NewGuid().ToString(), TextA = $"{hrBase.Title} {hrBase.Text}" }
-        ]
-    };
+        var result = new HotelReview2
+        {
+            Id = hrBase.Id,
+            Date = hrBase.Date,
+            Rating = hrBase.Rating,
+            Language = hrBase.Language,
+            Property = hrBase.Property,
+            Text = hrBase.Text,
+            Title = hrBase.Title
+        };
+
+        result.Ftses =
+        [
+            new() { Id = Guid.NewGuid().ToString(), TextA = result.CalcTextA() }
+        ];
+        
+        return result;
+    }
 
     public List<Fts>? Ftses { get; set; }
+    
+    public string CalcTextA() => $"{Title} {Text}";
 }
