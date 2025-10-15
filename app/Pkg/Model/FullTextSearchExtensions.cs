@@ -27,6 +27,30 @@ public static class FullTextSearchExtensions
 
     public static void AddFullTextSearch<TEntity>(this ModelBuilder modelBuilder) where TEntity : class, IHasFtses
     {
+        /* TODO: Convert to 'owned' because model cannot be shared by top-level entities. But will include by default.
+         
+        modelBuilder.Entity<TEntity>().OwnsMany(s => s.Ftses,
+           typeBuilder =>
+           {
+               typeBuilder.ToTable($"{typeof(TEntity).Name}Fts")
+                   .WithOwner()
+                   .HasForeignKey(l => l.OwnerId);
+
+               typeBuilder
+                   .HasIndex(x => x.OwnerId) // Will add 'Language' if more translations are needed
+                   .IsUnique();
+               
+               typeBuilder.Property(x => x.En)
+                   .IsGeneratedTsVectorColumn(SearchLangEnum.En.PostgresLanguage(), nameof(Fts.TextA));
+               typeBuilder.HasIndex(x => x.En).HasMethod("GIN");
+               
+               typeBuilder.Property(x => x.Fr)
+                   .IsGeneratedTsVectorColumn(SearchLangEnum.Fr.PostgresLanguage(), nameof(Fts.TextA));
+               typeBuilder.HasIndex(x => x.Fr).HasMethod("GIN");
+           });         
+         */
+        
+        
         var typeBuilder = modelBuilder.Entity<Fts>()
             .ToTable($"{typeof(TEntity).Name}Fts");
 
